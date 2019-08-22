@@ -2,6 +2,8 @@ package cn.chenzw.generator.code;
 
 import cn.chenzw.toolkit.datasource.entity.TableDefinition;
 import cn.chenzw.toolkit.datasource.mysql.builder.MySqlTableDefinitionBuilder;
+import cn.chenzw.toolkit.datasource.oracle.builder.OracleTableDefinitionBuilder;
+import cn.chenzw.toolkit.freemarker.FreeMarkerUtils;
 import freemarker.template.TemplateException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,21 +33,22 @@ public class CodeGeneratorTests {
     ApplicationContext applicationContext;
 
     @Test
-    public void test() throws SQLException {
+    public void test() throws SQLException, IOException, TemplateException {
 
         Connection connection = dataSource.getConnection();
 
-        TableDefinition tableDefinition = new MySqlTableDefinitionBuilder(connection, "sys_user").build();
+        TableDefinition tableDefinition = new OracleTableDefinitionBuilder(connection, "STAFF").build();
 
 
+        System.out.println(tableDefinition);
         Map<String, Object> dataModel = new HashMap<>();
         dataModel.put("tableDefinition", tableDefinition);
 
         ClassPathResource classPathResource = new ClassPathResource("template/basic/repository.ftl");
-        System.out.println(classPathResource.getPath());
-        // String s = FreeMarkerUtils.processToString(new File(""), dataModel);
+        System.out.println(classPathResource.getFile().getPath());
+         String s = FreeMarkerUtils.processToString(classPathResource.getFile(), dataModel);
 
-        //  System.out.println(s);
+         System.out.println(s);
 
         connection.close();
 
