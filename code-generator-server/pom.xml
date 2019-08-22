@@ -8,24 +8,16 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>code-generator-server</artifactId>
 
     <dependencies>
-
         <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.28</version>
+            <groupId>oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.3.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/ojdbc6-11.2.0.3.jar</systemPath>
         </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.16</version>
-        </dependency>
-
     </dependencies>
-
 
 </project>
