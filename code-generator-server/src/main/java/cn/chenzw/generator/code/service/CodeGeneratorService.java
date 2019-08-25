@@ -2,7 +2,6 @@ package cn.chenzw.generator.code.service;
 
 import cn.chenzw.generator.code.constants.CodeConstants;
 import cn.chenzw.toolkit.commons.FileExtUtils;
-import cn.chenzw.toolkit.commons.RandomStringExtUtils;
 import cn.chenzw.toolkit.commons.ZipUtils;
 import cn.chenzw.toolkit.datasource.core.factory.TableDefinitionFactory;
 import cn.chenzw.toolkit.datasource.entity.TableDefinition;
@@ -29,7 +28,7 @@ public class CodeGeneratorService {
     @Autowired
     DataSource dataSource;
 
-    public void generate(String tableName, String template, OutputStream outputStream)
+    public void generate(String tableName, String theme, OutputStream outputStream)
             throws SQLException, InstantiationException, IOException, TemplateException {
         TableDefinition tableDefinition = TableDefinitionFactory.create(dataSource, tableName);
 
@@ -40,7 +39,7 @@ public class CodeGeneratorService {
         };
 
         ClassPathResource templateResource = new ClassPathResource(
-                CodeConstants.TEMPLATE_BASE + File.separator + template);
+                CodeConstants.TEMPLATE_BASE + File.separator + theme);
 
         // 获取目录下的所有模版文件
         Collection<File> ftlFiles = FileUtils
