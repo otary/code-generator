@@ -42,7 +42,9 @@ public class CodeGeneratorController {
         }
 
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+
             codeGeneratorService.generate(tableName, theme, baos);
+
             ResponseUtils.download(DEFAULT_ZIP_NAME, new ByteArrayInputStream(baos.toByteArray()));
         }
     }
