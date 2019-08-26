@@ -3,6 +3,10 @@ package cn.chenzw.generator.code.controllers;
 import cn.chenzw.generator.code.constants.CodeConstants;
 import cn.chenzw.generator.code.service.CodeGeneratorService;
 import freemarker.template.TemplateException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +24,18 @@ import java.sql.SQLException;
  */
 @RestController
 @RequestMapping("/code-generator")
+@Api(tags = "代码生成器")
 public class CodeGeneratorController {
 
 
     @Autowired
     CodeGeneratorService codeGeneratorService;
 
+    @ApiOperation("生成代码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tableName", value = "数据库表名"),
+            @ApiImplicitParam(name = "theme", value = "模版主题（默认：baisc）", required = false)
+    })
     @GetMapping("/generate")
     public void generate(String tableName,
                          @RequestParam(required = false, defaultValue = CodeConstants.TEMPLATE_BASIC) String theme)
