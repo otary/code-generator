@@ -32,6 +32,10 @@ public class CodeGeneratorService {
             throws SQLException, InstantiationException, IOException, TemplateException {
         TableDefinition tableDefinition = TableDefinitionFactory.create(dataSource, tableName);
 
+        if (tableDefinition == null) {
+            throw new IllegalArgumentException("Table [" + tableName + "] dose not exist!");
+        }
+
         Map<String, Object> dataModel = new HashMap<String, Object>() {
             {
                 put(CodeConstants.TABLE_DEFINITION, tableDefinition);
@@ -49,10 +53,9 @@ public class CodeGeneratorService {
         for (File ftlFile : ftlFiles) {
             // 获取模版文件相对于模版目录的地址（包路径）
             String relativePath = FileExtUtils.relativePath(ftlFile.getPath(), templateResource.getFile().getPath());
-            FreeMarkerUtils.processToFile(ftlFile, dataModel, new File(
-                    tmpDirectory.getPath(), FreeMarkerUtils
-                    .processToString(relativePath, dataModel)
-                    .replaceAll("." + CodeConstants.TEMPLATE_SUFFIX, "." + CodeConstants.RESULT_SUFFIX)));
+            FreeMarkerUtils.processToFile(ftlFile, dataModel, new File(tmpDirectory.getPath(),
+                    FreeMarkerUtils.processToString(relativePath, dataModel)
+                            .replaceAll("." + CodeConstants.TEMPLATE_SUFFIX, "." + CodeConstants.RESULT_SUFFIX)));
         }
         // 压缩文件
         ZipUtils.toZip(tmpDirectory, outputStream);

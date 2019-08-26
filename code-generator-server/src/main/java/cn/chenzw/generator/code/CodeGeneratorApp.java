@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CodeGeneratorApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(CodeGeneratorApp.class, new String[]{
-                "--spring.profiles.active=mysql"
-        });
+        SpringApplication.run(CodeGeneratorApp.class, args);
     }
 }

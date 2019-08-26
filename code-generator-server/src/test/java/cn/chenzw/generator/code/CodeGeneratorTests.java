@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = CodeGeneratorApp.class)
 @WebAppConfiguration
-@ActiveProfiles("mysql")
+@ActiveProfiles("oracle")
 public class CodeGeneratorTests {
 
     @Autowired
@@ -36,10 +36,9 @@ public class CodeGeneratorTests {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
-
     @Test
     public void testGenerate() throws Exception {
-        this.mockMvc.perform(get("/code-generator/generate").param("tableName", "sys_user")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/code-generator/generate").param("tableName", "STAFF")).andExpect(status().isOk());
     }
 
 
